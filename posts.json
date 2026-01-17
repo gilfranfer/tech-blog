@@ -1,5 +1,4 @@
 [
-    //60a5fa, fbbf24, 4ade80, f472b6
     {
         "topic": "Git Stash",
         "category": "DevOps",
@@ -13,7 +12,7 @@
         "category": "Technology",
         "title": "Data Mesh: Decoding the Decentralized Data Revolution",
         "description": "An exploration of Data Mesh, a paradigm shift towards decentralized data management, its principles, benefits, challenges, and future.",
-        "link": "posts/20240515-data-mesh.html",
+        "link": "posts/20260116-data-mesh.html",
         "textColor": "fbbf24"
     }
 ]
