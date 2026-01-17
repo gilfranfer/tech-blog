@@ -1,0 +1,52 @@
+[
+    {
+        "topic": "Git Stash",
+        "category": "DevOps",
+        "title": "Git Stash: Dev Workflow's Secret Weapon",
+        "description": "Save your uncommitted changes without committing them. A guide to a cleaner workflow.",
+        "link": "posts/20260115-git-stash.html",
+        "textColor": "60a5fa"
+    },
+    {
+        "topic": "CSS Grid",
+        "category": "Frontend",
+        "title": "Mastering CSS Grid in 20 Minutes",
+        "description": "Create complex layouts with ease. Forget about floats and positioning hacks.",
+        "textColor": "c084fc"
+    },
+    {
+        "topic": "Node.js",
+        "category": "Backend",
+        "title": "Asynchronous Node.js Design Patterns",
+        "description": "Understanding Promises, Async/Await, and the Event Loop for better performance.",
+        "textColor": "4ade80"
+    },
+    {
+        "topic": "React",
+        "category": "React",
+        "title": "Custom Hooks: Clean Code Practices",
+        "description": "Extract component logic into reusable functions to keep your components clean.",
+        "textColor": "f472b6"
+    },
+    {
+        "topic": "Python",
+        "category": "Scripting",
+        "title": "Automating Daily Tasks with Python",
+        "description": "Save hours every week by writing simple scripts for repetitive tasks.",
+        "textColor": "fbbf24"
+    },
+    {
+        "topic": "Docker",
+        "category": "DevOps",
+        "title": "Dockerizing Your First Application",
+        "description": "A step-by-step guide to containerizing your web apps for consistent deployment.",
+        "textColor": "38bdf8" 
+    },
+    {
+        "topic": "TypeScript",
+        "category": "Languages",
+        "title": "Why You Should Switch to TypeScript",
+        "description": "Explore how strict typing can save you from runtime errors and improve tooling.",
+        "textColor": "3b82f6" 
+    }
+]

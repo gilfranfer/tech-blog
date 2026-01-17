@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gil - Dev Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'hsl(220, 80%, 60%)',
+                        secondary: 'hsl(280, 70%, 50%)',
+                        background: 'hsl(220, 20%, 8%)',
+                        card: 'hsl(220, 15%, 12%)',
+                        textlight: 'hsl(220, 10%, 90%)',
+                        textmuted: 'hsl(220, 10%, 70%)',
+                        danger: 'hsl(0, 70%, 50%)',
+                        success: 'hsl(120, 70%, 40%)',
+                    },
+                    fontFamily: {
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow-sm': '0 0 5px rgba(100, 200, 255, 0.4)',
+                        'glow-md': '0 0 15px rgba(100, 200, 255, 0.6)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                    },
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background font-body text-textlight leading-relaxed min-h-screen flex flex-col;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                @apply font-display text-textlight;
+            }
+            .gradient-text {
+                background: linear-gradient(90deg, hsl(220, 80%, 60%) 0%, hsl(280, 70%, 50%) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .glassmorphism-card {
+                @apply bg-card bg-opacity-30 backdrop-filter backdrop-blur-lg border border-opacity-20 border-primary shadow-glass;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:scale-[1.02] hover:bg-opacity-40 hover:shadow-glow-sm cursor-pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-secondary rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-50 p-4">
+        <div class="max-w-7xl mx-auto glassmorphism-card rounded-xl px-6 py-3 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:shadow-glow-sm transition-all">
+                    G
+                </div>
+                <span class="font-display font-bold text-xl tracking-tight text-textlight group-hover:text-primary transition-colors">
+                    Dev<span class="text-primary">Blog</span>
+                </span>
+            </a>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-grow pt-32 pb-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center mb-12 animate-fade-in-up">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 gradient-text">
+                    Software Development Posts
+                </h1>
+                <p class="text-textmuted text-lg max-w-2xl mx-auto">
+                    Explore tips and stories from the real developer world.
+                </p>
+            </div>
+
+            <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                </div>
+
+        </div>
+    </main>
+
+    <footer class="relative z-10 border-t border-white/5 bg-black/20 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+            <p class="text-xl font-display font-semibold gradient-text mb-2">
+                Spread the knowledge
+            </p>
+            <p class="text-textmuted text-sm">
+                &copy; 2026 Developer Blog. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>// --- 2. Load Blog Posts from JSON ---
+        async function loadBlogPosts() {
+            const gridContainer = document.getElementById('blog-grid');
+
+            try {
+                // Fetch the JSON file
+                const response = await fetch('posts.json');
+                
+                // Parse the JSON into a Javascript Object
+                const blogPosts = await response.json();
+
+                // Generate HTML
+                let htmlContent = '';
+                
+                blogPosts.forEach((post, index) => {
+                    const delay = ((index % 4) + 1) * 0.1;
+                    
+                    htmlContent += `
+                        <article class="glassmorphism-card rounded-2xl overflow-hidden card-hover animate-fade-in-up" style="animation-delay: ${delay}s;">
+                            <a href="#">
+                                <div class="h-48 w-full bg-gray-800 relative overflow-hidden group">
+                                    <img src="https://placehold.co/600x400/1e293b/${post.textColor}?text=${encodeURIComponent(post.topic)}" alt="${post.topic}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+                                </div>
+                                <div class="p-5">
+                                    <div class="flex gap-2 mb-3">
+                                        <span class="text-xs font-semibold text-secondary bg-secondary/10 px-2 py-1 rounded">${post.category}</span>
+                                    </div>
+                                    <h2 class="text-xl font-bold leading-tight mb-2">
+                                        ${post.title}
+                                    </h2>
+                                    <p class="text-sm text-textmuted line-clamp-2">
+                                        ${post.description}
+                                    </p>
+                                </div>
+                            </a>
+                        </article>
+                    `;
+                });
+
+                gridContainer.innerHTML = htmlContent;
+
+            } catch (error) {
+                console.error("Error loading posts:", error);
+                gridContainer.innerHTML = '<p class="text-center text-danger">Failed to load posts.</p>';
+            }
+        }
+
+        // Initialize
+        loadBlogPosts();
+
+    </script>
+</body>
+</html>
