@@ -25,5 +25,14 @@
         "link": "posts/20260117-microservice-observability.html",
         "textColor": "4ade80",
         "publishDate": "2026-01-18"
+    },
+    {
+        "topic": "Microservice Observability",
+        "category": "Microservice",
+        "title": "Java Microservice Observability: Your X-Ray Vision for Distributed Systems",
+        "description": "An in-depth look at Java Microservice Observability, its core pillars (logs, metrics, traces), benefits, challenges, and future trends.",
+        "link": "posts/20260117-microservice-observability.html",
+        "textColor": "4ade80",
+        "publishDate": "2026-01-20"
     }
 ]
