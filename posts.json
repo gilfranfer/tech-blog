@@ -10,7 +10,7 @@
     },
     {
         "topic": "Data Mesh",
-        "category": "Technology",
+        "category": "Data",
         "title": "Data Mesh: Decoding the Decentralized Data Revolution",
         "description": "An exploration of Data Mesh, a paradigm shift towards decentralized data management, its principles, benefits, challenges, and future.",
         "link": "posts/20260116-data-mesh.html",
@@ -18,7 +18,7 @@
         "publishDate": "2026-01-17"
     },
     {
-        "topic": "Java Microservice Observability",
+        "topic": "Microservice Observability",
         "category": "Microservice",
         "title": "Java Microservice Observability: Your X-Ray Vision for Distributed Systems",
         "description": "An in-depth look at Java Microservice Observability, its core pillars (logs, metrics, traces), benefits, challenges, and future trends.",
