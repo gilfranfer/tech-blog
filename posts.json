@@ -5,7 +5,8 @@
         "title": "Git Stash: Dev Workflow's Secret Weapon",
         "description": "Save your uncommitted changes without committing them. A guide to a cleaner workflow.",
         "link": "posts/20260115-git-stash.html",
-        "textColor": "60a5fa"
+        "textColor": "60a5fa",
+        "publishDate": "2026-01-16"
     },
     {
         "topic": "Data Mesh",
@@ -13,6 +14,16 @@
         "title": "Data Mesh: Decoding the Decentralized Data Revolution",
         "description": "An exploration of Data Mesh, a paradigm shift towards decentralized data management, its principles, benefits, challenges, and future.",
         "link": "posts/20260116-data-mesh.html",
-        "textColor": "fbbf24"
+        "textColor": "fbbf24",
+        "publishDate": "2026-01-17"
+    },
+    {
+        "topic": "Java Microservice Observability",
+        "category": "Microservice",
+        "title": "Java Microservice Observability: Your X-Ray Vision for Distributed Systems",
+        "description": "An in-depth look at Java Microservice Observability, its core pillars (logs, metrics, traces), benefits, challenges, and future trends.",
+        "link": "posts/20260117-microservice-observability.html",
+        "textColor": "4ade80",
+        "publishDate": "2026-01-18"
     }
 ]

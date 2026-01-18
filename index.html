@@ -120,7 +120,7 @@
         </div>
     </footer>
 
-    <script>// --- 2. Load Blog Posts from JSON ---
+    <script>
         async function loadBlogPosts() {
             const gridContainer = document.getElementById('blog-grid');
 
@@ -129,17 +129,29 @@
                 const response = await fetch('posts.json');
                 
                 // Parse the JSON into a Javascript Object
-                const blogPosts = await response.json();
+                const allPosts = await response.json();
+
+                // --- NEW FILTERING LOGIC START ---
+                // 1. Get current UTC date in "YYYY-MM-DD" format for accurate string comparison
+                const today = new Date().toISOString().split('T')[0];
+
+                const blogPosts = allPosts.filter(post => {
+                    // Show if no publishDate is set OR if the date has passed/is today
+                    return !post.publishDate || post.publishDate <= today;
+                });
+                // --- NEW FILTERING LOGIC END ---
 
                 // Generate HTML
                 let htmlContent = '';
                 
+                // Note: We iterate over 'blogPosts' (the filtered list), not 'allPosts'
                 blogPosts.forEach((post, index) => {
+                    // Recalculate delay based on the new filtered index so animations remain smooth
                     const delay = ((index % 4) + 1) * 0.1;
                     
                     htmlContent += `
                         <article class="glassmorphism-card rounded-2xl overflow-hidden card-hover animate-fade-in-up" style="animation-delay: ${delay}s;">
-                            <a href="${post.link}">
+                            <a href="${post.link || '#'}">
                                 <div class="h-48 w-full bg-gray-800 relative overflow-hidden group">
                                     <img src="https://placehold.co/600x400/1e293b/${post.textColor}?text=${encodeURIComponent(post.topic)}" alt="${post.topic}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
@@ -160,11 +172,16 @@
                     `;
                 });
 
-                gridContainer.innerHTML = htmlContent;
+                // Handle case where no posts match the criteria
+                if (blogPosts.length === 0) {
+                    gridContainer.innerHTML = '<p class="text-center text-textmuted col-span-full">No posts available at this time.</p>';
+                } else {
+                    gridContainer.innerHTML = htmlContent;
+                }
 
             } catch (error) {
                 console.error("Error loading posts:", error);
-                gridContainer.innerHTML = '<p class="text-center text-danger">Failed to load posts.</p>';
+                gridContainer.innerHTML = '<p class="text-center text-danger col-span-full">Failed to load posts.</p>';
             }
         }
 
