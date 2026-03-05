@@ -34,5 +34,14 @@
         "link": "posts/20260120-aws-api-security.html",
         "textColor": "f472b6",
         "publishDate": "2026-01-20"
+    },
+    {
+        "topic": "Outbox Pattern",
+        "category": "Design Patterns",
+        "title": "Transactional Outbox Pattern",
+        "description": "Solving the Dual-Write Problem",
+        "link": "posts/20260305-outbox-pattern.html",
+        "textColor": "60a5fa",
+        "publishDate": "2026-03-05"
     }
 ]

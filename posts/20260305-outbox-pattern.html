@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Stash: Dev Workflow's Secret Weapon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'hsl(220, 80%, 60%)', // Electric Blue
+                        secondary: 'hsl(280, 70%, 50%)', // Vibrant Purple
+                        background: 'hsl(220, 20%, 8%)', // Deep dark background
+                        card: 'hsl(220, 15%, 12%)', // Slightly lighter dark for cards
+                        textlight: 'hsl(220, 10%, 90%)',
+                        textmuted: 'hsl(220, 10%, 70%)',
+                        danger: 'hsl(0, 70%, 50%)',
+                        success: 'hsl(120, 70%, 40%)',
+                    },
+                    fontFamily: {
+                        display: ['Outfit', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow-sm': '0 0 5px rgba(100, 200, 255, 0.4)',
+                        'glow-md': '0 0 15px rgba(100, 200, 255, 0.6)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                    },
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 5px hsl(220, 80%, 60%, 0.4)' },
+                            '50%': { boxShadow: '0 0 10px hsl(220, 80%, 60%, 0.8)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background font-body text-textlight leading-relaxed min-h-screen flex flex-col;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                @apply font-display text-textlight;
+            }
+            .gradient-text {
+                background: linear-gradient(90deg, hsl(220, 80%, 60%) 0%, hsl(280, 70%, 50%) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            /* Consistent glassmorphism for nav and cards */
+            .glassmorphism-card {
+                @apply bg-card bg-opacity-30 backdrop-filter backdrop-blur-lg border border-opacity-20 border-primary shadow-glass;
+            }
+            .hashtag {
+                @apply inline-block bg-primary bg-opacity-20 text-primary text-sm font-medium px-3 py-1 rounded-full hover:bg-opacity-30 transition-all duration-200 cursor-pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-secondary rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full z-50 p-4">
+        <div class="max-w-7xl mx-auto glassmorphism-card rounded-xl px-6 py-3 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:shadow-glow-sm transition-all">
+                    G
+                </div>
+                <span class="font-display font-bold text-xl tracking-tight text-textlight group-hover:text-primary transition-colors">
+                    The Software Developer <span class="text-primary">Notebook</span>
+                </span>
+                <a class="text-textmuted text-sm" style="color:#4ade80" href="https://whatsapp.com/channel/0029VafEFIJ5kg7Dw2vH6F0x">
+                    Join Channel
+                </a>
+            </a>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-grow pt-32 pb-16 px-4 flex items-center justify-center">
+        
+        <div class="max-w-4xl w-full mx-auto p-6 md:p-8 rounded-2xl relative overflow-hidden glassmorphism-card animate-fade-in-up">
+            
+            <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+                <div class="absolute top-1/4 left-0 w-80 h-80 bg-primary rounded-full mix-blend-screen filter blur-3xl animate-float -translate-x-1/2"></div>
+                <div class="absolute bottom-1/4 right-0 w-64 h-64 bg-secondary rounded-full mix-blend-screen filter blur-3xl animate-float translate-x-1/2 animation-delay-2000"></div>
+            </div>
+        
+        <div class="relative z-10 space-y-8">
+            <header class="text-center mb-10 pt-4">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight gradient-text tracking-tight">
+                    Transactional Outbox Pattern:
+                </h1>
+                <p class="text-xl md:text-2xl text-textmuted max-w-2xl mx-auto italic">
+                    Solving the Dual-Write Problem
+                </p>
+                <p><small>March 5, 2026</small></p>
+            </header>
+
+            <!-- Media Section -->
+            <div class="relative w-full aspect-video rounded-3xl overflow-hidden mb-16 border border-white/10 shadow-2xl">
+                <img src='https://opal.google/board/blobs/0dd79903-c7db-4fcd-ba26-0b138de47932' alt='Transactional Outbox Pattern Illustration' class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
+            </div>
+ 
+            <section class="mb-8">
+                <p>The Transactional Outbox pattern addresses the critical challenge in microservices of ensuring data consistency when a database update and an event publication to a message broker (like Kafka or RabbitMQ) must occur atomically. This is known as the 'dual-write problem', and failure to manage it leads to inconsistencies and data integrity issues across distributed systems.</p>
+                <p>The Transactional Outbox pattern guarantees that either both the database update and the event publishing succeed, or neither does. It enhances the reliability of event-driven architectures by preventing event loss, even during temporary message broker unavailability or service crashes.</p>
+                
+                <div class="bg-dark/50 border border-white/5 rounded-2xl p-6 mt-6">
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">The Mechanics</h4>
+                    <ul class="space-y-4 list-none p-0">
+                        <li class="flex gap-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">1</span>
+                            <span><strong>Atomic Duo:</strong> Database update and event insertion happen in the *same local transaction*.</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">2</span>
+                            <span><strong>The Relay:</strong> An independent process monitors the outbox table for new events.</span>
+                        </li>
+                        <li class="flex gap-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">3</span>
+                            <span><strong>Publish & Process:</strong> Events are published to the broker and marked as processed only after confirmation.</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="glassmorphism-card p-6 border-l-4 border-primary hover:scale-105 transition-transform duration-300">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-4 text-primary">A Glimpse into the Past ⏳</h2>
+                <p class="mb-4 text-textmuted">
+                    "The core concepts of the Transactional Outbox pattern date back to the early 2000s, predating the widespread adoption of the term 'microservices'. Similar problems were addressed using local 'tracking tables' and database triggers..."
+                </p>
+                <p class="text-textmuted">
+                    Modern architects like Chris Richardson popularized this as a reliable alternative to complex distributed transactions like Two-Phase Commit (2PC), promoting eventual consistency for improved availability.
+                </p>
+            </section>
+
+            <section class="grid md:grid-cols-2 gap-8 my-8">
+                <div class="glassmorphism-card p-6 border-t-4 border-success hover:shadow-glow-sm transition-shadow duration-300">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-3 text-success">The Positives</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-textmuted">
+                        <li>Bulletproof Event Publishing</li>
+                        <li>Avoids Distributed Transactions</li>
+                        <li>Explicit Event Control</li>
+                        <li>Improved Performance</li>
+                        <li>Cloud-Native & Serverless Friendly</li>
+                    </ul>
+                </div>
+
+                <div class="glassmorphism-card p-6 border-t-4 border-danger hover:shadow-glow-sm transition-shadow duration-300">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-3 text-danger">The Pitfalls 💀</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-textmuted">
+                            <li>At-Least-Once Delivery duplicates</li>
+                            <li>Operational Overhead</li>
+                            <li>Outbox Table Management</li>
+                            <li>Code Intrusion vs CDC</li>
+                            <li>Exactly-Once Complexity</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="glassmorphism-card p-6 border-b-4 border-secondary hover:scale-105 transition-transform duration-300">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-4 text-secondary">Key Takeaways 💡</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+                            <span class="text-blue-400 font-bold block mb-1">Atomic Success</span>
+                            <span class="text-sm text-slate-300">Solve the dual-write problem for good.</span>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+                            <span class="text-blue-400 font-bold block mb-1">Idempotency</span>
+                            <span class="text-sm text-slate-300">Crucial for handling at-least-once delivery.</span>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+                            <span class="text-blue-400 font-bold block mb-1">Maintenance</span>
+                            <span class="text-sm text-slate-300">Operational discipline for cleanup is vital.</span>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+                            <span class="text-blue-400 font-bold block mb-1">Context matters</span>
+                            <span class="text-sm text-slate-300">Choose Outbox for rich business logic.</span>
+                        </div>
+                    </div>
+            </section>
+
+            <div class="flex flex-wrap justify-center gap-2 mt-8">
+                <span class="hashtag">#Microservices</span>
+                <span class="hashtag">#SoftwareArchitecture</span>
+                <span class="hashtag">#DesignPatterns</span>
+                <span class="hashtag">#TechTips</span>
+            </div>
+        </div>
+        </div>
+        </main>
+
+    <footer class="relative z-10 border-t border-white/5 bg-black/20 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+            <p class="text-xl font-display font-semibold gradient-text mb-2">
+                Spread the knowledge
+            </p>
+            <a class="text-textmuted text-sm" style="color:#4ade80" href="https://whatsapp.com/channel/0029VafEFIJ5kg7Dw2vH6F0x">
+                Join the Whatsapp Channel
+            </a>
+            <p class="text-textmuted text-sm">
+                &copy; 2026 Gillab. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
